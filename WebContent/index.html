@@ -1,72 +1,153 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1,user-scalable=no">
-<meta http-equiv=X-UA-Compatible content="IE=Edge,chrome=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Mcode</title>
+    <meta name="renderer" content="webkit">
+    <!-- Mcode自适应辅助代码，不用可删除，见：http://code.wiredmed.com/show.php?id=19&url=http://code.wiredmed.com/code/common/base/2016-04-08/19.html -->
+    <script>(function(){function a(){return/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)?!0:/(Android)/i.test(navigator.userAgent)?!0:!1}var d=document.getElementsByTagName("html")[0];var e;if(a()){window.isMobile=1;e="MC"}else{window.isMobile=0;e="PC"}d.className=d.className?d.className+" "+e:e;var b=d.className;function c(f){var h="";var g=document.documentElement.clientWidth;1600>g&&(h+=" lt1600");1400>g&&(h+=" lt1400");1200>g&&(h+=" lt1200");1000>g&&(h+=" lt1000");960>g&&(h+=" lt960");640>g&&(h+=" lt640");500>g&&(h+=" lt500");400>g&&(h+=" lt400");1600<g&&(h+=" gt1600");1400<g&&(h+=" gt1400");1200<g&&(h+=" gt1200");1000<g&&(h+=" gt1000");960<g&&(h+=" gt960");640<g&&(h+=" gt640");500<g&&(h+=" gt500");400<g&&(h+=" gt400");f.className=b+h}c(d);window.onresize=function(f){c(d)}})();</script>
+    <!--让IE9以下浏览器支持html5标签 -->
+    <!--[if lt IE 9]>
+    <script> (function(){if(!/*@cc_on!@*/0)return;var e = "abbr,article,aside,audio,canvas,datalist,details,dialog,eventsource,figure,footer,header,hgroup,mark,menu,meter,nav,output,progress,section,time,video".split(','),i=e.length;while(i--){document.createElement(e[i])}})() </script>
+    <![endif]-->
+    <!-- Mcode基础及扩展样式集合，正式使用应下载到本地 -->
+    <link rel="stylesheet" href="css/base.min.css">
+    <link rel="stylesheet" href="css/extend.min.css">
+    <script src="http://cdn.bootcss.com/jquery/1.4.1/jquery.js"></script>
+    <link rel="stylesheet" href="css/style.css"/>
+    <style>
+        html{ background-color: #f1f1f1;}
+        /*公共代码*/
+        header{background-color: #fff;}
+        .w-main{width: 1000px;}
+        .MC .w-main{width:100%}
+    </style>
+    <script>
+        $(function () {
+            var navName='.mj-nav';//菜单块
+            var menuA='.mj-nav-a';//菜单项
+            var childName='.mj-nav-child:has(li)';//子菜单
+            if(window.isMobile){//移动端
+                $('.mj-mcmenu-body').html($(navName).html());//转移菜单
+                $('.mj-nav-b').click(function(){if($(this).siblings(childName).length)return false;});//阻值跳转
+                //菜单按钮
+                $('.mj-mcmenu-show').add('.mj-mcmenu-close').click(function(){$('.mj-mcmenu').toggleClass('on');});
+            }
+            $(menuA).hover(function () {$(childName, this).stop(false, true).slideDown('fast');}, function () {$(childName, this).stop(false, true).slideUp('fast');});
 
-<title>在线客服页面</title>
-<!-- 样式 -->
-<link rel=stylesheet href="css/common.css">
-<link rel=stylesheet href="css/jdc-side-panel.css">
-
+        });
+    </script>
 </head>
 <body>
+<!--移动菜单-->
+<button class="mj-mcmenu-show pc-hide">&Xi;</button>
+<div class="mj-mcmenu pc-hide"><button class="mj-mcmenu-close">X</button><div class="mj-mcmenu-box"><div class="mj-mcmenu-body"></div></div></div>
+<header>
+    <div class="w-main f-bc f-cb">
+        <div class="mj-logo g-w70 g-mw g-fl"><img src="http://nysy.gzyuanri.com/skin/img/logo.jpg" alt=""></div>
+        <div class="f-fr g-w30 g-mw">
+            <div class="f-p10">
+                <div class="f-cb mj-search-form f-f14">
+                    <form method="post" action="http://nysy.gzyuanri.com/core/search/index.php" >
+                        <input type="hidden" name="show" value="title">
+                        <input type="hidden" name="classid" value="8">
+                        <div class="g-w80 g-fl">
+                            <input title="" class="mj-search-form-input" placeholder="请输入关键字..." type="text" name="keyboard" />
+                        </div>
+                        <button type="submit" class="mj-search-form-btn g-fl g-w20">搜索</button>
+                    </form >
+                </div>
+                <p class="mj-search-hot f-f12 f-mt10"><b>热门搜索：</b><a href="#" target=_blank>新冠疫情</a><a href="#">政务</a></p>
+            </div>
+        </div>
+    </div>
+    <nav class="mj-nav mc-hide">
+        <div class="w-main f-bc f-cb">
+            <div class="mj-nav-a on">
+                <a class="mj-nav-b" href="#">首页</a>
+            </div>
+            <div class="mj-nav-a">
+                <a class="mj-nav-b" href="#">要闻动态</a>
+                <div class="mj-nav-child">
+                    <ul class="mj-nav-child-ul">
+                        <li><a href="#" target="_blank">山西要闻</a></li>
+                        <li><a href="#" target="_blank">政务活动</a></li>
+                        <li><a href="#" target="_blank">政务联播</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mj-nav-a">
+                <a class="mj-nav-b" href="#">政务信息公开</a>
+                <div class="mj-nav-child">
+                    <ul class="mj-nav-child-ul">
+                        <li><a href="#" target="_blank">政务信息公开指南</a></li>
+                        <li><a href="#" target="_blank">政务信息公开制度</a></li>
+                        <li><a href="#" target="_blank">政务信息公开内容</a></li>
+                        <li><a href="#" target="_blank">政务信息公开年报</a></li>
+                        <li><a href="#" target="_blank">文件</a></li>
+                    </ul>
+                </div>
+            </div>
 
-<div class="jdc-side" style="display: block;">
-  <div class="mod_hang_qrcode jdc_feedback_qrcode">
-    <div class="mod_hang_qrcode_btn"><i class="jdcfont"></i><span>扫码反馈</span></div>
-    <div class="mod_hang_qrcode_show">
-      <div class="mod-qr-tips"></div>
-      <div class="mod_hang_qrcode_show_bg">
-        <div id="canvas" style="height: 123px; width: 123px;"><img src="images/qr_img.png"></div>
-      </div>
-      <p>扫一扫，反馈当前页面</p>
-    </div>
-  </div>
-  <div class="mod_hang_appeal">
-    <div class="mod_hang_appeal_btn"><i class="jdcfont"></i> <span>咨询反馈</span></div>
-    <div class="mod_hang_appeal_show">
-      <ul>
-        <li><a href="#" target="_blank">
-          <div class="icon_box"><i class="jdcfont"></i></div>
-          <div class="text_box">
-            <h5>人工客服</h5>
-            <p>7*12 专业客服，服务咨询</p>
-          </div>
-          </a></li>
-        <li id="entry"><a href="#" target="_blank" class="f-cb">
-          <div class="icon_box"><i class="jdcfont"></i></div>
-          <div class="text_box">
-            <h5>工单服务</h5>
-            <p>7*24全时处理，技术支持</p>
-          </div>
-          </a></li>
-        <li><a href="#" target="_blank" class="f-cb">
-          <div class="icon_box"><i class="jdcfont"></i></div>
-          <div class="text_box">
-            <h5>投诉建议</h5>
-            <p>倾耳聆听，一个工作日内及时处理</p>
-          </div>
-          </a></li>
-      </ul>
-    </div>
-    </div>
-  <div class="mod_hang_qrcode jdc_hang_qrcode"><a class="mod_hang_qrcode_btn"><i class="jdcfont"></i><span>扫码关注</span></a>
-    <div class="mod_hang_qrcode_show">
-      <div class="mod_hang_qrcode_show_bg"></div>
-      <p>站长云微信公众号</p>
-    </div>
-  </div>
-  <div class="mod_hang_qrcode mod_hang_top"><a href="#" class="mod_hang_qrcode_btn"><i class="jdcfont"></i><span>返回顶部</span></a></div>
-  <div class="el-dialog__wrapper" style="display: none;">
-    <div class="el-dialog el-dialog--small" style="top: 15%;">
-      <div class="el-dialog__header"><span class="el-dialog__title"></span>
-        <div type="button" class="el-dialog__headerbtn"><i class="el-dialog__close el-icon el-icon-close"></i></div>
-      </div>
-      </div>
-  </div>
-</div>
+            <div class="mj-nav-a">
+                <a class="mj-nav-b" href="#">政务服务</a>
+                <div class="mj-nav-child">
+                    <ul class="mj-nav-child-ul">
+                        <li><a href="#" target="_blank">便民缴费</a></li>
+                        <li><a href="#" target="_blank">个人办事</a></li>
+                        <li><a href="#" target="_blank">单位办事</a></li>
+                        <li><a href="#" target="_blank">全程网办</a></li>
+                        <li><a href="#" target="_blank">办件结果</a></li>
+                        <li><a href="#" target="_blank">政务查询</a></li>
+                    </ul>
+                </div>
+            </div>
 
+            <div class="mj-nav-a">
+                <a class="mj-nav-b" href="#">政民互动</a>
+                <div class="mj-nav-child">
+                    <ul class="mj-nav-child-ul">
+                        <li><a href="#" target="_blank">省长信箱</a></li>
+                        <li><a href="#" target="_blank">部门信箱</a></li>
+                        <li><a href="#" target="_blank">市长信箱</a></li>
+                        <li><a href="#" target="_blank">意见征集</a></li>
+                        <li><a href="#" target="_blank">在线访谈</a></li>
+                        <li><a href="#" target="_blank">网上信访</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mj-nav-a">
+                <a class="mj-nav-b" href="#">政府数据</a>
+                <div class="mj-nav-child">
+                    <ul class="mj-nav-child-ul">
+                        <li><a href="#" target="_blank">统计图表</a></li>
+                        <li><a href="#" target="_blank">统计公报</a></li>
+                        <li><a href="#" target="_blank">普查数据</a></li>
+                        <li><a href="#" target="_blank">调查数据</a></li>
+                        <li><a href="#" target="_blank">全民阅读</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mj-nav-a">
+                <a class="mj-nav-b" href="#">走进山西</a>
+                <div class="mj-nav-child">
+                    <ul class="mj-nav-child-ul">
+                        <li><a href="#" target="_blank">这里是山西</a></li>
+                        <li><a href="#" target="_blank">山西风光</a></li>
+                        <li><a href="#" target="_blank">山西人文</a></li>
+                        <li><a href="#" target="_blank">山西资源</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </nav>
+</header>
 </body>
 </html>
