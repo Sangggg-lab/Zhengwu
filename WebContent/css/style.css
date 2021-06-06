@@ -1,0 +1,35 @@
+/*菜单*/
+.mj-nav{line-height: 40px;height: 40px;font-size: 0;background-color:#0aa6bd; }
+.MC .mj-nav-a{ padding: 0;margin-bottom: 1px;display: block;text-align: center;line-height: 30px;}
+.mj-nav-a.on .mj-nav-b,.mj-nav-a:hover .mj-nav-b{color: #fff;background-color: #f29b10;}
+.mj-nav-child{position:absolute;left:-20%;top:40px;width:140%;}
+.mj-nav-a{
+    font-size: 0;display: inline-block;position: relative;text-decoration:none;cursor: default;}
+.mj-nav-b{padding-left: 25px;padding-right: 25px;background-color:#0aa6bd; font-size:16px;display:block;font-weight:400;color: #fff;text-decoration: none;}
+.mj-nav-child{display:none;z-index:10;background-color:#fff;border:1px solid #eee;border-top: 0; }
+.mj-nav-child-ul{margin:5px;padding: 0;list-style: none;text-align: left}
+.mj-nav-child-ul a{font-size: 14px;text-decoration:none;text-align: center;display: block;line-height:20px;  padding: 3px;border-bottom:1px dotted #ddd;color: #666; }
+.mj-nav-child-ul a:hover{background-color:#f1f1f1}
+.PC .mj-logo{height: 109px;}
+.MC .mj-logo img{margin-top: 10px;margin-left: 10px;}
+.MC .mj-logo img{max-width: 80%}
+.MC .mj-nav-child {margin: 0;border: none; position: relative;top: 0;left: 0;width: 100%;}
+/*.mj-search-form{font-size: 14px;}*/
+.mj-search-form-btn{display: block;border: none;color: #fff;overflow: hidden;height: 30px;line-height: 30px;  background-color: #0aa6bd;}
+.mj-search-form-btn:hover{background: #f29b10;}
+.mj-search-form-input{height: 30px;color: #666;border: none;border-radius: 0;display: block;background-color: #f1f1f1;  width: 100%;}
+.mj-search-hot a:hover,.mj-search-hot b{color: #0aa6bd;}
+.mj-search-hot a{text-decoration: none;display: inline-block; color: #999; margin-right:5px;}
+/*自适应调整*/
+.PC .mj-search-form{padding-top:20px;}
+.mj-mcmenu{
+    background-color: rgba(0,0,0,0.6);
+    position: fixed;width: 100%;height: 100%;
+    z-index: 99; left: 100%;top: 0;opacity: 0; transition: opacity .3s linear;
+}
+.mj-mcmenu.on{left: 0;opacity: 1;}
+.mj-mcmenu-close{border: none;background: none;color: #fff;font-size: 24px;font-family: arial;cursor: pointer;  position: absolute;top: 50%;left: 15%;margin-top: -12px;}
+.mj-mcmenu-box{ white-space:nowrap; text-overflow:ellipsis; -o-text-overflow:ellipsis; overflow:hidden;  transition: all .2s linear;overflow-x: hidden;  background-color: #fff;width: 0;  position: absolute;top: 0;right: 0;  height: 100%;overflow-y: auto;  }
+.mj-mcmenu.on .mj-mcmenu-box{width: 60%;}
+.mj-mcmenu-body{padding: 10px;}
+.mj-mcmenu-show{position: absolute;top:10px;right:10px;line-height:45px;color:#999;font-size:20px;border: none;cursor:pointer;font-family:'微软雅黑';  background: none;}

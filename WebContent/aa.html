@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width,height=device-height">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<!--解决点击页面文本框导致页面放大-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="../font_Icon/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="../font_Icon/iconfont2.css">
+   <link rel="stylesheet" type="text/css" href="../css/chat.css">
+    <script src="../js/HZRecorder.js"></script>
+     <script src="../js/common_audio.js"></script>
+     	<link rel="stylesheet" href="../css/common_audio.css">
+    <script src="../js/mui.min.js"></script>
+      <!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.css">
+     	<link rel="stylesheet" href="../css/mui.min.css">
+     		<!--App自定义的css-->
+		<style type="text/css">
+			.mui-preview-image.mui-fullscreen {
+				position: fixed;
+				z-index: 20;
+				background-color: #000;
+			}
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
+			}
+			.mui-preview-header {
+				height: 44px;
+				top: 0;
+			}
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+			.mui-preview-header .mui-preview-indicator {
+				display: block;
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 16px;
+			}
+			.mui-preview-image {
+				display: none;
+				-webkit-animation-duration: 0.5s;
+				animation-duration: 0.5s;
+				-webkit-animation-fill-mode: both;
+				animation-fill-mode: both;
+			}
+			.mui-preview-image.mui-preview-in {
+				-webkit-animation-name: fadeIn;
+				animation-name: fadeIn;
+			}
+			.mui-preview-image.mui-preview-out {
+				background: none;
+				-webkit-animation-name: fadeOut;
+				animation-name: fadeOut;
+			}
+			.mui-preview-image.mui-preview-out .mui-preview-header,
+			.mui-preview-image.mui-preview-out .mui-preview-footer {
+				display: none;
+			}
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+			@-webkit-keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@-webkit-keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			@keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			p img {
+				max-width: 100%;
+				height: auto;
+			}
+		</style>
+         <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html, body {
+            background: #fff;
+        }
+        
+        .btn {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background: #eee;
+        }
+        
+        .btn input {
+            width: 100%;
+            height: 100%;
+            font: 20px/60px 'microsoft yahei';
+        }
+        
+        .blackBoxSpeak {
+            width: 176px;
+            height: 176px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            background: url("../img/ic_record@2x.png") no-repeat 28px 16px/65px 104px,
+            url("../img/ic_record_ripple@2x-9.png") no-repeat 111.2px 32px/28.8px 88px;
+            
+            background: rgba(0, 0, 0, .7);
+            display: none;
+            border-radius: 12px;
+        }
+        
+        .blackBoxSpeakConent {
+            font: 14.4px '微软雅黑 Light';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 12px;
+            display: block;
+            text-align: center;
+            width: 90%;
+            padding: 8px 0;
+            margin: auto;
+            color: #ffffff;
+            font-weight: 200;
+            border-radius: 4px;
+        }
+        
+        .blackBoxPause {
+            width: 176px;
+            height: 176px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            background: url("../img/ic_record@2x.png") no-repeat 28px 16px/65px 104px,
+            url("../img/ic_record_ripple@2x-9.png") no-repeat 111.2px 32px/28.8px 88px;
+            
+            background: rgba(0, 0, 0, .7);
+            display: none;
+            border-radius: 12px;
+        } 
+        
+        .blackBoxPauseContent {
+            font: 14.4px '微软雅黑 Light';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 12px;
+            display: block;
+            text-align: center;
+            width: 90%;
+            padding: 8px 0;
+            margin: auto;
+            color: #ffffff;
+            font-weight: 200;
+            border-radius: 4px;
+        }
+    </style>	
+     <script type="text/javascript" src="../js/jquery.min.js"></script> 	
+     <script type="text/javascript">
+     	mui.init();
+     	window.addEventListener('refresh', function(e){//执行刷新
+     		if(e.detail.id==1){
+                  location.reload();
+                 }
+            });
+     //聊天记录
+    var chatRecord;
+    //好友手机号
+    var ToUserId ;
+	//名称
+	var toName;
+    //本人手机号
+    var UserId;
+    //本人名字
+	var name ;
+var msg_type;
+	var websocket = null;
+	mui.plusReady(function () {
+		 name =plus.storage.getItem("name");
+		plus.nativeUI.closeWaiting();
+		mui.currentWebview.show(); 
+		  var self = plus.webview.currentWebview();
+          ToUserId = ""+self.ToUserId;//获得参数
+		  toName = self.Name;
+		  console.log(toName);
+		  $(".ChatInfoName").html("<font color=\"#000000\">"+toName+"</font>");
+		  if(plus.storage.getItem("chatback")!=null){
+		  	var img=plus.storage.getItem("chatback");
+		  	 $(".chatBox-info").css("background-image","url("+img+")");
+		  }
+          console.log("ToUserId----"+ToUserId);
+          plus.storage.setItem("chating",ToUserId);
+          UserId=plus.storage.getItem("username");
+          console.log("UserId----"+UserId);
+		if(plus.storage.getItem(ToUserId)==null){
+			plus.storage.setItem(ToUserId,"");
+			//alert('创建成功');
+		}else{
+			//alert('已经创建成功');
+			chatRecord=plus.storage.getItem(ToUserId);
+			//alert(chatRecord);
+			$(".chatBox-content-demo").append(chatRecord);
+            $(document).ready(function () {
+                $("#chatBox-content-demo").scrollTop($("#chatBox-content-demo")[0].scrollHeight);
+            });
+		}
+		
+    //判断当前浏览器是否支持WebSocket
+    if ('WebSocket' in window) {
+        websocket = new WebSocket("ws://192.168.1.18:8080/xgh_logistics/websocket/"+UserId);
+    /* websocket = new WebSocket("ws://61.163.34.143:8090/zzdy_oa/websocket");*/
+    } 
+    else {
+        alert('当前浏览器 Not support websocket')
+    }
+     //连接发生错误的回调方法
+    websocket.onerror = function () {
+    	console.log("通信连接发生错误");
+       // setMessageInnerHTML("WebSocket连接发生错误",msg_type);
+    };
+    //连接成功建立的回调方法
+    websocket.onopen = function () {
+        //setMessageInnerHTML("WebSocket连接成功",msg_type);
+        console.log("WebSocket连接成功-------");
+         /* var Content='{"UserId":"'+UserId+'","ToUserId":"'+ToUserId+'","Content":"WebSocket连接成功","time":"'+time+'"}';//字符串中的属性要严格的加上引号
+             websocket.send(Content);*/
+    }
+    //接收到消息的回调方法
+    websocket.onmessage = function (event) {
+    	var str=event.data;
+    	var obj = JSON.parse(str);;
+    	console.log("发送方--"+obj.UserId);
+    	console.log("接收方---"+obj.ToUserId);
+    	console.log("消息内容"+obj.Content);
+    	console.log("消息类型"+obj.type);
+    	console.log("消息类型"+obj.time);
+        msg_type=obj.type;
+         var audio_Time="test";
+        if(msg_type=="audio"){
+        	audio_Time=obj.audio_time;
+        }
+        if(ToUserId==obj.UserId){
+        setMessageInnerHTML(obj.Content,obj.time,msg_type,audio_Time);
+      }
+    }
+ 
+    //连接关闭的回调方法
+    websocket.onclose = function () {
+    	 	console.log("WebSocket连接关闭");
+        //setMessageInnerHTML("WebSocket连接关闭");
+    }
+ 
+    //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+    window.onbeforeunload = function () {
+        closeWebSocket();
+    }
+ 
+    //将消息显示在网页上
+    function setMessageInnerHTML(innerHTML,msg_Time,msg_type,audio_Time) {
+    	var content=null;
+    	if(msg_type=="image"){
+    	  content= "<div class='clearfloat'><div class='author-name'><small class='chat-date'>"+msg_Time+"</small></div><div class='left'><div class='chat-avatars' style='font-size: 75%;text-align:center;line-height:0.7rem;background-color: #007AFF;width:0.7rem;height: 0.7rem;border-radius: 100%;color: #FFFFFF;margin-top: -5px;'>"+toName+"</div><div class='chat-message'><img src='"+innerHTML+"' data-preview-src='' data-preview-group='1' alt=''/></div></div></div>" 
+       // document.getElementById('message').innerHTML += innerHTML + '<br/>';
+        }if(msg_type=="txt"||msg_type==null){
+        	 content= "<div class='clearfloat'><div class='author-name'><small class='chat-date'>"+msg_Time+"</small></div><div class='left'> <div class='chat-avatars' style='font-size: 75%;text-align:center;line-height:0.7rem;background-color: #007AFF;width:0.7rem;height: 0.7rem;border-radius: 100%;color: #FFFFFF;margin-top: -5px;'>"+toName+"</div><div class='chat-message'>"+innerHTML+"</div></div></div>"; 
+        	 console.log("----"+content);
+        }if(msg_type=="audio"){
+        	var msg="<div class='add_yuyin'><div class='r_yuyin' onclick='playaudio(this)' style='width:60px' data-time='44'>"+audio_Time+"\" <input style='display:none'  value='"+innerHTML+"'/><s></s></div></div>";
+        	content="<div class='clearfloat'><div class='author-name'><small class='chat-date'>"+msg_Time+"</small></div><div class='left'> <div class='chat-avatars' style='font-size: 75%;text-align:center;line-height:0.7rem;background-color: #007AFF;width:0.7rem;height: 0.7rem;border-radius: 100%;color: #FFFFFF;margin-top: -5px;'>"+toName+"</div><div class='chat-message'>"+msg+"</div></div></div>" ;
+            console.log("http---"+content);
+        }
+        addChatRecord(content);
+        //新消息提示
+       startPlay();
+      $(".chatBox-content-demo").append(content);
+        $(document).ready(function () {
+                $("#chatBox-content-demo").scrollTop($("#chatBox-content-demo")[0].scrollHeight);
+            });
+           
+     }
+     //关闭WebSocket连接
+    function closeWebSocket() {
+    	websocket.close();
+    }
+		})
+	
+	
+/*	if(window.plus){  
+    // 在这里调用5+ API  
+    }else{// 兼容老版本的plusready事件  
+    document.addEventListener('plusready',function () {  
+		
+		}
+	  },false); 
+	 }*/
+    
+    /**
+ * @param {Object} chat_record	 聊天文本
+ */
+    function addChatRecord(chat_record){
+    	    //console.log(chat_record);
+    		chatRecord=plus.storage.getItem(ToUserId);
+    		console.log("-++++-------"+ToUserId);
+    		chatRecord+=chat_record;
+    		console.log("-------"+chatRecord);
+    		plus.storage.setItem(ToUserId,chatRecord);
+    }
+	
+ 
+   
+    /**  
+ * 播放音频  
+ * @param {Object} path  
+ */  
+ var player;
+function playAudio (id,path) {  
+	if(player!=null) //如果存在  
+	{  
+	player.stop(); //停止正在播放的音频，  
+		$(".r_yuyin").find("s").removeClass("bofang");
+		player=null;
+	}  else{
+	 $(id).find("s").addClass("bofang");
+    player = plus.audio.createPlayer(path);
+    player.play(function(){  
+    	 $(id).find("s").removeClass("bofang");
+      //  mui.toast("播放完成");  
+    }, function(e) {  
+       // mui.toast("播放失败");  
+    });  
+    }
+    
+}  
+ 
+    var dshiqi = null;
+    var audiotime;
+    var audioStatus;
+ 
+    function playaudio(id) {
+				 var url = $(id).find("input").val();
+				audioStatus = plus.audio.createPlayer(url);
+				//  var len=  audioStatus.getBuffered();
+				//$(id).find("s").removeClass("bofang");
+			  playAudio(id,url);
+			
+   }
+/**  
+ * base64字符串转成语音文件(参考http://ask.dcloud.net.cn/question/16935)  
+ * @param {Object} base64Str  
+ * @param {Object} callback  
+ */  
+function dataURL2Audio (base64Str, callback) {  
+    var base64Str = base64Str.replace('data:audio/amr;base64,','');  
+    var audioName = (new Date()).valueOf() + '.amr';  
+ 
+    plus.io.requestFileSystem(plus.io.PRIVATE_DOC,function(fs){  
+        fs.root.getFile(audioName,{create:true},function(entry){  
+            // 获得平台绝对路径  
+            var fullPath = entry.fullPath;  
+            if(mui.os.android){    
+                // 读取音频  
+                var Base64 = plus.android.importClass("android.util.Base64");  
+                var FileOutputStream = plus.android.importClass("java.io.FileOutputStream");  
+                try{  
+                    var out = new FileOutputStream(fullPath);  
+                    var bytes = Base64.decode(base64Str, Base64.DEFAULT);  
+                    out.write(bytes);   
+                    out.close();  
+                    // 回调  
+                    callback && callback(entry);  
+                }catch(e){  
+                    console.log(e.message);  
+                }  
+            }else if(mui.os.ios){  
+                var NSData = plus.ios.importClass('NSData');  
+                var nsData = new NSData();  
+                nsData = nsData.initWithBase64EncodedStringoptions(base64Str,0);  
+                if (nsData) {  
+                    nsData.plusCallMethod({writeToFile: fullPath,atomically:true});  
+                    plus.ios.deleteObject(nsData);  
+                }  
+                // 回调  
+                callback && callback(entry);  
+            }  
+        })  
+    })  
+}  
+ 
+    //发送消息
+  /*  function send() {
+        var message = document.getElementById('text').value;
+        websocket.send(message);
+    }*/
+     </script>
+ 
+		 
+</head>
+<body>
+<div id="content" class="content">
+<div class="chatContainer">
+    <div class="chatBtn">
+        <i class="iconfont icon-xiaoxi1"></i>
+    </div>
+  
+    <div class="chatBox" ref="chatBox">
+        <div class="chatBox-head">
+            <div class="chatBox-head-two">
+                <div class="chat-return" style="color: #000000;"><div class="mui-icon mui-icon-back"></div></div>
+                <div class="chat-people">
+                    <div class="ChatInfoName" style="width: 100%;font;position: absolute;left: 39%;"></div>
+                
+                </div>
+                 <div class="ChatIcon">
+                <div onclick="chatChoose()"  class="mui-icon mui-icon-phone" style="color: #000000;"></div>&nbsp;&nbsp;
+                <div onclick="claer_chat()"  class="mui-icon mui-icon-bars" style="color: #000000;"></div>
+                </div>
+              <!-- <div class="chat-close">关闭</div>-->
+            </div>
+        </div>
+ 
+        <div class="chatBox-info">
+       <!--  <audio controls autoplay src="http://sc1.111ttt.cn:8282/2018/1/03m/13/396131232171.m4a?tflag=1546606800&pin=97bb2268ae26c20fe093fd5b0f04be80#.mp3"></audio>-->
+            <div class="chatBox-kuang" ref="chatBoxkuang">
+                <div class="chatBox-content">
+                	<div style="display: none;"><audio controls autoplay></audio> </div> 	 
+                    <div class="chatBox-content-demo" id="chatBox-content-demo">
+ 
+          
+ 
+                    </div>
+                </div>
+              
+                <div class="chatBox-send">
+                    <div class="div-textarea" contenteditable="true"></div>
+                    <div>
+                        <button id="bt_recoding" class="btn-default-styles">
+                            <i class="mui-icon mui-icon-mic"></i>
+                        </button>
+                        <label id="chat-tuxiang" title="发送图片" for="inputImage" class="btn-default-styles">
+                            <input type="file" onchange="selectImg(this)" accept="image/*" name="file" id="inputImage" class="hidden"  capture="camera">
+                           <i class="mui-icon mui-icon-image"></i>
+                        </label>
+                        <button id="chat-fasong" class="btn-default-styles"><i class="fasong">发送</i><!--<i class="iconfont icon-fasong" style="width: px;"></i>-->
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- 中间黑框 录音状态 -->
+<div class="blackBoxSpeak">
+	<p class="blackBoxSpeakConent">手指上划，取消发送</p>
+</div>
+ 
+<!-- 中间黑框 暂停状态 -->
+<div class="blackBoxPause">
+	<p class="blackBoxPauseContent" style="background: red">松开手指， 取消发送</p>
+</div>
+<script>
+  
+  function Time(){
+  	var date=new Date();
+  var year=date.getFullYear();//当前年份
+	var month=date.getMonth();//当前月份
+	var data=date.getDate();//天
+	var hours=date.getHours();//小时
+	var minute=date.getMinutes();//分
+	var second=date.getSeconds();//秒
+	var time=year+"-"+fnW((month+1))+"-"+fnW(data)+" "+fnW(hours)+":"+fnW(minute)+":"+fnW(second);
+	console.log("time---"+time);
+	return time;
+   }
+	//补位 当某个字段不是两位数时补0
+	function fnW(str){
+	var num;
+	str>9?num=str:num="0"+str;
+	return num;
+	} 
+    screenFuc();
+    function screenFuc() {
+        var topHeight = $(".chatBox-head").innerHeight();//聊天头部高度
+        //屏幕小于768px时候,布局change
+        var winWidth = $(window).innerWidth();
+        if (winWidth <= 768) {
+            var totalHeight = $(window).height(); //页面整体高度
+            $(".chatBox-info").css("height", totalHeight - topHeight);
+            var infoHeight = $(".chatBox-info").innerHeight();//聊天头部以下高度
+            //中间内容高度
+            $(".chatBox-content").css("height", infoHeight - 46);
+            $(".chatBox-content-demo").css("height", infoHeight - 66);
+ 
+            $(".chatBox-list").css("height", totalHeight - topHeight);
+            $(".chatBox-kuang").css("height", totalHeight - topHeight);
+            $(".div-textarea").css("width", winWidth - 150);
+        } else {
+            $(".chatBox-info").css("height", 495);
+            $(".chatBox-content").css("height", 448);
+            $(".chatBox-content-demo").css("height", 448);
+            $(".chatBox-list").css("height", 495);
+            $(".chatBox-kuang").css("height", 495);
+            $(".div-textarea").css("width", 260);
+        }
+    }
+    (window.onresize = function () {
+        screenFuc();
+    })();
+ 
+ 
+ 
+    //返回列表
+    $(".chat-return").click(function () {
+    	plus.storage.removeItem("chating");
+    	mui.back();
+     /* window.history.back();*/
+    });
+    //点击选择照片自动触发input图片上传
+    $("#chat-tuxiang").click(function () {
+    	//$("#inputImage").click();
+    	document.getElementById("inputImage").click();
+    });
+ 
+    //      发送信息
+    $("#chat-fasong").click(function () {
+        var textContent = $(".div-textarea").html()/* resplace(/[\n\r]/g, '<br>') */;
+        if (textContent != "") {
+        	var chatdiv="<div class=\"clearfloat\">" +
+                "<div class=\"author-name\"><small class=\"chat-date\">"+Time()+"</small> </div> " +
+                "<div class=\"right\"> <div class=\"chat-message\"> " + textContent + " </div> " +
+                "<div class=\"chat-avatars\" style=\"font-size: 75%;text-align:center;line-height:0.7rem;background-color: #007AFF;width:0.7rem;height: 0.7rem;border-radius: 75%;color: #FFFFFF;margin-top:-5px\">"+name+"</div> </div> </div>";
+           console.log("============="+chatdiv);
+           $(".chatBox-content-demo").append(chatdiv);
+            //发送后清空输入框
+            $(".div-textarea").html("");
+            //聊天框默认最底部
+            $(document).ready(function () {
+                $("#chatBox-content-demo").scrollTop($("#chatBox-content-demo")[0].scrollHeight);
+            });
+             // out.println(textContent); 
+             addChatRecord(chatdiv);
+              var Content='{"UserId":"'+UserId+'","FromUserName":"'+name+'","ToUserId":"'+ToUserId+'","Content":"'+textContent+'","type":"txt","time":"'+Time()+'"}';//字符串中的属性要严格的加上引号
+             websocket.send(Content);
+ 
+        }
+    });
+    
+   //通过画布降低上传图片像素
+      var  canvas = document.createElement("canvas");
+       var  ctx = canvas.getContext('2d');
+    //      发送图片
+    function selectImg(pic) {
+        if (!pic.files || !pic.files[0]) {
+            return;
+        }
+        var reader = new FileReader();
+        var images=new Image();
+        reader.onload = function () {
+        	  var url = reader.result;//读取到的文件内容.这个属性只在读取操作完成之后才有效,并且数据的格式取决于读取操作是由哪个方法发起的.所以必须使用reader.onload，
+                images.src=url;//reader读取的文件内容是base64,利用这个url就能实现上传前预览图片
+           var chatImg="<div class=\"clearfloat\">" +
+                "<div class=\"author-name\"><small class=\"chat-date\">"+Time()+"</small> </div> " +
+                "<div class=\"right\"> <div class=\"chat-message\"><img src=" + images.src + " data-preview-src='' data-preview-group='1'></div> " +
+                "<div class=\"chat-avatars\" style=\"font-size: 75%;text-align:center;line-height:0.7rem;background-color: #007AFF;width:0.7rem;height: 0.7rem;border-radius: 100%;color: #FFFFFF;margin-top: -5px;\">"+name+"</div> </div> </div>";
+          addChatRecord(chatImg);
+          $(".chatBox-content-demo").append(chatImg);
+            //聊天框默认最底部
+            $(document).ready(function () {
+                $("#chatBox-content-demo").scrollTop($("#chatBox-content-demo")[0].scrollHeight);
+            });
+        };
+			images.onload=function(){
+				  var w = images.naturalWidth,
+                                h = images.naturalHeight;
+                            canvas.width = w;
+                            canvas.height = h;
+                            ctx.drawImage(images, 0, 0, w, h, 0, 0, w, h);
+                            fileUpload();
+			};
+        reader.readAsDataURL(pic.files[0]);
+ 
+    }
+ 
+	function fileUpload() {
+			var data = canvas.toDataURL("image/jpeg",0.3);
+			 console.log("img------"+data);
+		  var Content='{"UserId":"'+UserId+'","FromUserName":"'+name+'","ToUserId":"'+ToUserId+'","Content":"'+data+'","type":"image","time":"'+Time()+'"}';//字符串中的属性要严格的加上引号
+        	 websocket.send(Content);
+	}
+ 
+</script>
+</body>
+	<script src="../js/mui.zoom.js"></script>
+	<script src="../js/mui.previewimage.js"></script>
+	<script>
+		mui.previewImage();
+	</script>
+</html>
+ 
+<script type="text/javascript">
+	var MIN_SOUND_TIME = 800;
+	 var startTimestamp = null;
+	 var stopTimestamp = null;
+  	// 开始录音
+		var r;
+		//语音path
+		var amr;
+		//判断是否发送语音
+        var IsSendAudio=true;
+		function startRecord(){
+		//	alert("开始录音");
+			startTimestamp = (new Date()).getTime();
+			r = plus.audio.getRecorder();
+			r.record( {filename:"_doc/audio/"}, function (p) {
+				//alert("录音成功");
+				amr=p;
+				stopTimestamp = (new Date()).getTime();
+            if(IsSendAudio==true){
+            	if (stopTimestamp - startTimestamp < MIN_SOUND_TIME) {
+            		mui.toast("按键时间太短");
+				}else{
+            	Audio2dataURL(amr);
+            	}
+           }
+			}, function ( e ) {
+				alert( "Audio record failed: " + e.message );
+			} );
+			}
+		// 停止录音
+		function stopRecord(){
+			r.stop();
+		}
+		
+		function startPlay(){
+			var p= plus.audio.createPlayer("../music/tips.mp3");
+			//alert("p"+p);
+			p.play(function(){
+				//alert("播放完毕");
+			})
+		} 
+		/**  
+ * 录音语音文件转base64字符串  
+ * @param {Object} path  
+ */  
+function Audio2dataURL (path) {  
+    plus.io.resolveLocalFileSystemURL(path, function(entry){  
+        entry.file(function(file){  
+            var reader = new plus.io.FileReader();  
+            reader.onloadend = function (e) {  
+            	var data=e.target.result;
+            	stopTimestamp = (new Date()).getTime();
+            	var times=((stopTimestamp-startTimestamp)/1000).toFixed(1);
+                console.log("------"+e.target.result);  
+                var chataudio="<div class=\"clearfloat\">" +
+                "<div class=\"author-name\"><small class=\"chat-date\">"+Time()+"</small> </div> " +
+                "<div class=\"right\"> <div class=\"chat-message\">  <div class=\"add_yuyin\"><div class=\"r_yuyin\" onclick=\"playaudio(this)\" style=\"width:60px;color:white\" >"+times+"\"<input style=\"display:none\"  value='"+amr+"'/><s></s></div></div></div>" +
+               "<div class=\"chat-avatars\" style=\"font-size: 75%;text-align:center;line-height:0.7rem;background-color: #007AFF;width:0.7rem;height: 0.7rem;border-radius: 100%;color: #FFFFFF;margin-top:-5px\">"+name+"</div> </div> </div>";
+            
+            addChatRecord(chataudio);
+            $(".chatBox-content-demo").append(chataudio);
+              
+            //聊天框默认最底部
+            $(document).ready(function () {
+                $("#chatBox-content-demo").scrollTop($("#chatBox-content-demo")[0].scrollHeight);
+            });
+                 var Content='{"UserId":"'+UserId+'","FromUserName":"'+name+'","ToUserId":"'+ToUserId+'","Content":"'+data+'","type":"audio","time":"'+Time()+'","audio_time":"'+times+'"}';//字符串中的属性要严格的加上引号
+        	     websocket.send(Content);
+            };  
+            reader.readAsDataURL(file);  
+        },function(e){  
+            mui.toast("读写出现异常: " + e.message );  
+        })  
+    })  
+}  
+		
+    //录音按钮
+    var bt_recoding = document.getElementById("bt_recoding");
+    //中间黑色边框和里面的内容（录音状态）
+    var blackBoxSpeak = document.querySelector(".blackBoxSpeak");
+    blackBoxSpeak.style.background = "url('../img/ic_record@2x.png')no-repeat 28 16px/65px 104px, url('../img/ic_record_ripple@2x-9.png')no-repeat 111.2px 32px/28.8px 88px";
+    blackBoxSpeak.style.backgroundColor = "rgba(0,0,0,.7)";
+    //中间黑色边框和里面的内容（暂停状态）
+    var blackBoxPause = document.querySelector(".blackBoxPause");
+    blackBoxPause.style.background = "rgba(0,0,0,.7) url('../img/ic_release_to_cancel@2x.png')no-repeat center 8px/67.2px 104px";
+    blackBoxPause.style.backgroundColor = "rgba(0,0,0,.7)";
+ 
+    //手指移动相关
+    var posStart = 0;//初始化起点坐标
+    var posEnd = 0;//初始化终点坐标
+    var posMove = 0;//初始化滑动坐标
+ 
+    //轮播相关
+    var index = [9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    var num = index.length;
+    var timer = null; //用于清除计时器
+ 
+    //直接开启轮播模式
+    setTimer();
+    function initEvent() {
+        bt_recoding.addEventListener("touchstart", function (event) {
+            event.preventDefault();//阻止浏览器默认行为
+            posStart = 0;
+            posStart = event.touches[0].pageY;//获取起点坐标
+            //开始录音
+            startRecord();
+            //显示录音 隐藏暂停
+            showBlackBoxSpeak();
+        });
+        bt_recoding.addEventListener("touchmove", function (event) {
+            event.preventDefault();//阻止浏览器默认行为
+            posMove = event.targetTouches[0].pageY;//获取滑动实时坐标
+            if (posStart - posMove < 200) {
+                //隐藏录音 显示暂停
+               // alert('aaa');
+                showBlackBoxSpeak();
+            } else {
+            	 //停止录音
+            	stopRecord();
+                //显示录音 隐藏暂停
+                showBlackBoxPause();
+                IsSendAudio=false;
+               // alert('停止录音取消发送');
+            }
+        });
+        bt_recoding.addEventListener("touchend", function (event) {
+            event.preventDefault(); //阻止浏览器默认行为
+            posEnd = 0;
+            posEnd = event.changedTouches[0].pageY;//获取终点坐标
+            //初始化状态
+            initStatus();
+            if (posStart - posEnd < 200) {
+               stopRecord();
+                showBlackBoxNone();
+                IsSendAudio=true;
+            } else {
+                showBlackBoxNone();
+                IsSendAudio=false;
+            }
+        });
+    }
+ 
+    initEvent();
+ 
+    //轮播
+    function setTimer() {
+        timer = setInterval(function () {
+            setTimeout(function () {
+                num++;   
+                blackBoxSpeak.style.background = "url('../img/ic_record@2x.png')no-repeat 28px 16px/64px 104px, url('../img/ic_record_ripple@2x-" + index[num] + ".png')no-repeat 111.2px 32px/28.8px 88px";
+                blackBoxSpeak.style.backgroundColor = " rgba(0,0,0,.7)";
+            }, 70);
+            if (num >= index.length - 1) {
+                num = 0;
+            }
+        }, 70);
+    }
+ 
+    //初始化状态
+    var initStatus = function () {
+        bt_recoding.value = '按住 说话';
+ 
+        //全部隐藏
+        showBlackBoxNone();
+    }
+ 
+    //显示录音 隐藏暂停
+    var showBlackBoxSpeak = function () {
+        bt_recoding.value = '松开 结束';
+        blackBoxSpeak.style.display = "block";
+        blackBoxPause.style.display = "none";
+    }
+ 
+    //隐藏录音 显示暂停
+    var showBlackBoxPause = function () {
+        bt_recoding.value = '松开手指，取消发送';
+        blackBoxSpeak.style.display = "none";
+        blackBoxPause.style.display = "block";
+    }
+ 
+    //隐藏录音
+    var showBlackBoxNone = function () {
+        blackBoxSpeak.style.display = "none";
+        blackBoxPause.style.display = "none";
+    }
+    
+    //拨打电话
+   function chatChoose(){
+   		var btnArray = [{
+							title: "手机电话"
+						}/*, {
+							title: "语音通话"
+						},{
+							title: "视频通话"
+						}*/];
+						plus.nativeUI.actionSheet({
+							title: "你可以选择以下通话操作",
+							cancel: "取消",
+							buttons: btnArray
+						}, function(e) {
+							var index = e.index;
+							switch (index) {
+								case 0:
+									break;
+								case 1:
+									//手机电话
+									plus.device.dial(ToUserId, false);
+									//mui.toast("手机电话开发中..");
+									break;
+								case 2:
+									//语音通话
+									mui.toast("语音通话开发中..");
+									break;
+								case 3:
+									//视频通话
+									mui.toast("视频通话开发中..");
+									break;
+							}
+						});
+					
+   }
+   
+   
+     //拨打电话
+   function claer_chat(){
+   		var btnArray = [{
+							title: "清空本地聊天记录"
+						}, {
+							title: "修改聊天背景"
+						}/*,{
+							title: "访问服务端聊天记录"
+						}*/
+   		               ];
+						plus.nativeUI.actionSheet({
+							title: "聊天设置",
+							cancel: "取消",
+							buttons: btnArray
+						}, function(e) {
+							var index = e.index;
+							switch (index) {
+								case 0:
+									break;
+								case 1:
+									//清空本地聊天记录
+									plus.storage.removeItem(ToUserId);
+									location.reload();
+									mui.toast("清空成功");
+									break;
+								case 2:
+									var webview = mui.openWindow({
+										url: 'chatBackground.html',
+										extras: {
+										toUserId: ToUserId, //扩展参数
+										Name: name
+									}
+									});
+								//	mui.open("chatBackground.html");
+									break;
+								/*case 3:
+									//访问服务端聊天记录
+									mui.toast("访问服务端聊天记录..");
+									break;*/
+							}
+						});
+					
+   }
+ 
+   
+</script>
+ 

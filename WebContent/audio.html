@@ -1,0 +1,63 @@
+<!Doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>MUSIC</title>
+		<style type="text/css">
+			*{margin:0px;padding:0px;}
+			#bg{position:absolute;top:0px;left:0px;background:url("./image/success.jpg");background-size:cover;height:100%;width:100%;overflow:hidden;}
+			#music_icon{position:fixed;top:10px;right:10px;background:url("./image/success.png");background-size:cover;height:55px;width:55px;}
+			#music_board{height:500px;width:400px;background:#999;margin:10% auto;border-radius:12px;box-shadow:0px 0px 15px #222;display:none;}
+			#music_gif{height:280px;width:380px;position:relative;top:20px;left:10px;background:url("./image/music_5.gif");background-size:cover;}
+			#music_control{text-align: center;position: relative;top: 50px;color: rgb(255, 255, 255);font-size: 1.5em;}
+			#control{margin-top:45px;width:100%;height:70px;text-align:center;}
+		</style>
+	</head>
+	<body>
+		<audio id="music" src="http://www.w3school.com.cn/i/song.mp3" loop="loop"></audio>
+		<div id="bg">
+			<div id="music_icon" οnclick="show_music_board()"></div>
+			<div id="music_board">
+				<div id="music_gif"></div>
+				<div id="music_control">MUSIC BOARD
+					<div id="control">
+						<img  id="control_img" src="./img/pause_button.png" height="60px" οnclick="music_control()">
+					</div>
+				</div>
+			</div>
+		</div>
+ 
+		<script type="text/javascript">
+		var music = document.getElementById("music");//建立audio对象
+		var control_img = document.getElementById("control_img");//建立播放按钮图片对象，为了更好的操作
+		var music_board = document.getElementById("music_board");//建立music面板的对象，为了更好的操作
+		var lock = false;//设置一个布尔变量，用于判断音乐的播放与暂停
+ 
+		function music_control(){//音乐开始与暂停
+			if( lock == false){
+				music.play();
+				control_img.setAttribute("src", "./img/pause_button.png");
+				lock = true;
+			}
+			else{
+				music.pause();
+				control_img.setAttribute("src", "./img/play_button.png");
+				lock = false;
+			}
+			
+		}
+ 
+		function show_music_board(){//music面板的显现与展示
+			if( music_board.style.display == "none"){music_board.style.display = "block";
+				lock = false;
+				music_control();
+			}
+			else{
+				music_board.style.display ="none";
+				lock = true;
+				music_control();
+			}
+		}
+		</script>
+	</body>
+</html>
